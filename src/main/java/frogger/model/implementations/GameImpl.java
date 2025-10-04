@@ -90,8 +90,9 @@ public class GameImpl implements Game {
                 this.level.removePickableObject(x);
             }
         );
-
-        if (this.player.getPos().y() > Constants.MIN_Y && this.player.getPos().y() < 1) {
+        
+        System.out.println(this.player.getPos());
+        if (this.player.getPos().y() > Constants.MIN_Y && this.player.getPos().y() <= 0) {
             if (this.level.getAllObstacles().stream().anyMatch(x -> x.getHitBox().intersects(this.player.getHitBox()))) {
                 this.player.playerHit();
             }
@@ -117,6 +118,7 @@ public class GameImpl implements Game {
                     }
                 });
             } else {
+                System.out.println(this.player.getPos());
                 this.player.playerHit();
             }
         }

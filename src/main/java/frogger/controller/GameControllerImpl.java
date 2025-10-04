@@ -68,6 +68,7 @@ public class GameControllerImpl extends AbstractController implements GameContro
     @Override
     public void core() {
         this.inputController.processInput(this.game);
+        this.game.getPlayer().move();
         this.game.checkCollision();
         this.game.checkGameOver();
         this.game.checkProgress();

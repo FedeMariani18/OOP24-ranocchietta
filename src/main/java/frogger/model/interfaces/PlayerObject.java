@@ -103,4 +103,16 @@ public interface PlayerObject extends GameObject {
      * @param sMultiplier the score multiplier to set
      */
     void setScoreMultiplier(int sMultiplier);
+
+    /**
+     * Makes the player jump, if applicable.
+     */
+    void setJump(boolean state);
+
+    /**
+     * Returns whether the player is currently jumping.
+     */
+    boolean isJumping();
+
+    void move();
 }

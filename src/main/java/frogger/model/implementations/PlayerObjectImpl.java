@@ -26,6 +26,8 @@ public class PlayerObjectImpl extends GameObjectImpl implements PlayerObject {
     private boolean dead;
     /** The multiplier for the score. */
     private int scoreMoltiplier = 1;
+    /** */
+    private boolean jumping = false;
 
     /**
      * Constructs a new PlayerObjectImpl with the given dimension and skin.
@@ -41,6 +43,34 @@ public class PlayerObjectImpl extends GameObjectImpl implements PlayerObject {
         this.direction = Direction.UP;
         this.attached = false;
         this.dead = false;
+    }
+
+    
+    @Override
+    public void setJump(boolean state) {
+        jumping = state;
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    @Override
+    public void move() {
+        if(this.isJumping()) {
+            switch (direction) {
+                case Direction.UP:
+                    this.setPos(new Position(this.getPos().x(), (float)(this.getPos().y() + 0.1)));
+                    break;
+                default:
+                    break;
+            }
+
+            if (Math.abs(this.getPos().y() - Math.round(this.getPos().y())) < 0.01) {
+                this.setJump(false);
+                this.setPos(new Position(this.getPos().x(), Math.round(this.getPos().y())));
+            }
+        }
     }
 
     /**
