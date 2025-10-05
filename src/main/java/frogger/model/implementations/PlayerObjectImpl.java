@@ -58,17 +58,39 @@ public class PlayerObjectImpl extends GameObjectImpl implements PlayerObject {
     @Override
     public void move() {
         if(this.isJumping()) {
+            boolean arriveCheck = false; 
             switch (direction) {
                 case Direction.UP:
-                    this.setPos(new Position(this.getPos().x(), (float)(this.getPos().y() + 0.1)));
+                    this.setPos(new Position(this.getPos().x(), (float)(this.getPos().y() + 0.02)));
+                    if (Math.abs(this.getPos().y() - Math.round(this.getPos().y())) < 0.01) {
+                        arriveCheck = true;
+                    }
+                    break;
+                case Direction.DOWN:
+                    this.setPos(new Position(this.getPos().x(), (float)(this.getPos().y() - 0.02)));
+                    if (Math.abs(this.getPos().y() - Math.round(this.getPos().y())) < 0.01) {
+                        arriveCheck = true;
+                    }
+                    break;
+                case Direction.LEFT:
+                    this.setPos(new Position((float)(this.getPos().x() - 0.02), this.getPos().y()));
+                    if(Math.abs(this.getPos().x() - Math.round(this.getPos().x())) < 0.01){
+                        arriveCheck = true;
+                    }
+                    break;
+                case Direction.RIGHT:
+                    this.setPos(new Position((float)(this.getPos().x() + 0.02), this.getPos().y()));
+                    if(Math.abs(this.getPos().x() - Math.round(this.getPos().x())) < 0.01){
+                        arriveCheck = true;
+                    }
                     break;
                 default:
                     break;
             }
 
-            if (Math.abs(this.getPos().y() - Math.round(this.getPos().y())) < 0.01) {
+            if (arriveCheck) {
                 this.setJump(false);
-                this.setPos(new Position(this.getPos().x(), Math.round(this.getPos().y())));
+                this.setPos(new Position(Math.round(this.getPos().x()), Math.round(this.getPos().y())));
             }
         }
     }

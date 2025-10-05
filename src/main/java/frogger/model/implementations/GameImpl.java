@@ -91,7 +91,7 @@ public class GameImpl implements Game {
             }
         );
         
-        System.out.println(this.player.getPos());
+        // System.out.println(this.player.getPos());
         if (this.player.getPos().y() > Constants.MIN_Y && this.player.getPos().y() <= 0) {
             if (this.level.getAllObstacles().stream().anyMatch(x -> x.getHitBox().intersects(this.player.getHitBox()))) {
                 this.player.playerHit();

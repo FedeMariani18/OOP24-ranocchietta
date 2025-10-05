@@ -38,4 +38,17 @@ public final class LoadSave {
             return null;
         }
     }
+
+    public static BufferedImage getSubSprite(final String fileName, final int x, final int y, final int w, final int h) {
+        try (InputStream is = LoadSave.class.getResourceAsStream("/" + fileName)) {
+            if (is == null) {
+                LOGGER.log(Level.SEVERE, "File not found: ", fileName);
+                return null;
+            }
+            return ImageIO.read(is);
+        } catch (final IOException e) {
+            LOGGER.log(Level.SEVERE, "Error reading image: ", e.getMessage());
+            return null;
+        }
+    }
 }

@@ -11,6 +11,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import frogger.common.Constants;
 import frogger.common.Direction;
 import frogger.common.LoadSave;
+import frogger.common.Pair;
+import frogger.common.Position;
 import frogger.controller.GameController;
 import frogger.model.interfaces.PickableObject;
 import frogger.model.interfaces.PlayerObject;
@@ -81,7 +83,7 @@ public class LevelPainter {
     private void paintPlayer(final Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
         final var player = getController().getGame().getPlayer();
-        final BufferedImage playerImage = player.getImage(); 
+        final BufferedImage playerImage = this.choosePlayerSprite(); 
         final int playerX = (int) getController().getXinPixel(player.getPos().x());
         final int playerY = (int) getController().getYinPixel(player.getPos().y());
         final int playerWidth = player.getDimension().width() * Constants.BLOCK_WIDTH;
@@ -99,6 +101,33 @@ public class LevelPainter {
             g2d.rotate(-angle, playerX + playerWidth / 2.0, playerY + playerHeight / 2.0); // Restore the rotation
         }
 
+    }
+
+    private BufferedImage choosePlayerSprite() {
+        float r = 0;
+        if(getController().getGame().getPlayer().isJumping()) {
+            Position rest = new Position(Math.abs(getController().getGame().getPlayer().getPos().x() - Math.round(getController().getGame().getPlayer().getPos().x())),
+             Math.abs(getController().getGame().getPlayer().getPos().y() - Math.round(getController().getGame().getPlayer().getPos().y())));
+
+            if(rest.x() == 0) {
+                r = rest.y();
+            } else if(rest.y() == 0) {
+                r = rest.x();
+            }
+
+            if(r <= 0.2) {
+                return LoadSave.getSprite("ranocchietta_sprites.png").getSubimage(0, 0, 50, 50);
+            } else if(r <= 0.4) {
+                return LoadSave.getSprite("ranocchietta_sprites.png").getSubimage(55, 0, 50, 60);
+            } else if(r <= 0.6) {
+                return LoadSave.getSprite("ranocchietta_sprites.png").getSubimage(115, 0, 50, 75);
+            } else if(r <= 0.8) {
+                return LoadSave.getSprite("ranocchietta_sprites.png").getSubimage(171, 0, 50, 70);
+            } else {
+                return LoadSave.getSprite("ranocchietta_sprites.png").getSubimage(227, 0, 50, 60);
+            }
+        }
+        return LoadSave.getSprite("ranocchietta.png");
     }
 
     /**

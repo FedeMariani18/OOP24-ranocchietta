@@ -19,7 +19,8 @@ public class MoveDown implements Command {
         final PlayerObject player = game.getPlayer();
         if (player.getPos().y() > Constants.MIN_Y) {
             player.setLookingDown();
-            player.setPos(new Position(player.getPos().x(), player.getPos().y() - 1));
+            //player.setPos(new Position(player.getPos().x(), player.getPos().y() - 1));
+            player.setJump(true);
         }
     }
 

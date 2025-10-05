@@ -19,7 +19,8 @@ public class MoveLeft implements Command {
         final PlayerObject player = game.getPlayer();
         if (player.getPos().x() > Constants.MIN_X) {
             player.setLookingLeft();
-            player.setPos(new Position(player.getPos().x() - 1, player.getPos().y()));
+            //player.setPos(new Position(player.getPos().x() - 1, player.getPos().y()));
+            player.setJump(true);
         }
     }
 
